@@ -13,6 +13,7 @@ import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import RaportPage from '../pages/private/RaportPage';
+import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
 
 const PrivateRoutes = () => {
     return (
@@ -31,6 +32,7 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
             <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
             <Route path="/dashboard/raport" element={<RaportPage />} />
+            <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
         </Routes>
     );
 };
