@@ -22,6 +22,12 @@ const MyCourses = () => {
     fetchMateri();
   };
 
+  // Helper untuk format tanggal
+  const formatDate = (dateStr) => {
+    const d = new Date(dateStr);
+    return d.toLocaleString("id-ID");
+  };
+
   return (
     <div>
       <NavbarPengajar />
@@ -36,8 +42,52 @@ const MyCourses = () => {
         <div className="grid gap-4">
           {materiList.map((materi) => (
             <div key={materi._id} className="border rounded p-4 shadow">
-              <h3 className="font-semibold text-lg">{materi.judul}</h3>
-              <p>{materi.deskripsi}</p>
+              <h3 className="font-semibold text-lg mb-2">{materi.judul}</h3>
+              <p className="mb-2"><b>Deskripsi:</b> {materi.deskripsi}</p>
+              <p className="mb-2">
+                <b>Video URL:</b>{" "}
+                {materi.videoUrl ? (
+                  <a
+                    href={materi.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    {materi.videoUrl}
+                  </a>
+                ) : (
+                  <span className="text-gray-500">Tidak ada</span>
+                )}
+              </p>
+              <p className="mb-2"><b>Teks Penjelasan:</b> {materi.teksPenjelasan || <span className="text-gray-500">Tidak ada</span>}</p>
+              <div className="mb-2">
+                <b>Dibuat oleh:</b>{" "}
+                {materi.dibuatOleh?.nama || materi.dibuatOleh?._id || <span className="text-gray-500">Tidak diketahui</span>}
+              </div>
+              <div className="mb-2">
+                <b>Tanggal dibuat:</b>{" "}
+                {materi.createdAt ? formatDate(materi.createdAt) : <span className="text-gray-500">Tidak diketahui</span>}
+              </div>
+              <div>
+                <b>Quiz:</b>
+                {materi.quiz && materi.quiz.length > 0 ? (
+                  <ol className="list-decimal ml-6">
+                    {materi.quiz.map((q, idx) => (
+                      <li key={idx} className="mb-2">
+                        <div><b>Pertanyaan:</b> {q.pertanyaan}</div>
+                        <ul className="list-disc ml-4">
+                          {q.opsi.map((o, oidx) => (
+                            <li key={oidx}>{o}</li>
+                          ))}
+                        </ul>
+                        <div><b>Jawaban Benar:</b> {q.jawabanBenar}</div>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <div className="text-gray-500">Tidak ada quiz.</div>
+                )}
+              </div>
             </div>
           ))}
         </div>
