@@ -39,7 +39,7 @@ const Navbar = () => {
         </NavLink>
 
         <div className="hidden md:flex space-x-6 ml-auto mr-20">
-          {['Home', 'About', 'Contact', 'Pricing'].map((item) => (
+          {['Home', 'About', 'Contact'].map((item) => (
             <NavLink
               key={item}
               to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
@@ -83,7 +83,7 @@ const Navbar = () => {
           className="absolute top-full left-0 w-full bg-white shadow-md md:hidden"
         >
           <div className="flex flex-col space-y-4 p-4">
-            {['Home', 'About', 'Contact', 'Pricing'].map((item) => (
+            {['Home', 'About', 'Contact'].map((item) => (
               <NavLink
                 key={item}
                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}

@@ -5,7 +5,6 @@ import VerificationCodePage from '../pages/public/VerificationCodePage';
 import HomePage from '../pages/public/HomePage';
 import AboutPage from '../pages/public/AboutPage';
 import ContactPage from '../pages/public/ContactPage';
-import PricingPage from '../pages/public/PricingPage';
 
 const PublicRoutes = () => {
     return (
@@ -13,7 +12,6 @@ const PublicRoutes = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/VerificationPage" element={<VerificationCodePage />} />
