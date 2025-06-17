@@ -7,7 +7,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const backend = "http://localhost:5000";
+  const backend = "https://be-inter-learn.vercel.app";
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -93,7 +93,7 @@ const Profile = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nama */}
         <div>
-          <label className="font-medium">Nama*</label>
+          <label className="font-medium">Username*</label>
           <input
             type="text"
             name="nama"
@@ -117,7 +117,7 @@ const Profile = () => {
 
         {/* Username */}
         <div>
-          <label className="font-medium">Username</label>
+          <label className="font-medium">Nama Lengkap</label>
           <input
             type="text"
             name="username"

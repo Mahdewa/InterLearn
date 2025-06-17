@@ -38,7 +38,7 @@ const CourseForm = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/materi",
+        "https://be-inter-learn.vercel.app/api/materi",
         { judul, deskripsi, videoUrl, teksPenjelasan, quiz },
         { headers: { Authorization: `Bearer ${token}` } }
       );

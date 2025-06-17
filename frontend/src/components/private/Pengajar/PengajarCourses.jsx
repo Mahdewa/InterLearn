@@ -9,7 +9,7 @@ const MyCourses = () => {
   const [showAddForm, setShowAddForm] = useState(false);
 
   const fetchMateri = async () => {
-    const res = await axios.get("http://localhost:5000/api/materi");
+    const res = await axios.get("https://be-inter-learn.vercel.app/api/materi");
     setMateriList(res.data);
   };
 
