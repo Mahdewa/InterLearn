@@ -24,7 +24,7 @@ const CourseCard = ({ course }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/dashboard/detailcontent', { state: { course } });
+    navigate('/dashboard/user/detailcontent', { state: { course } });
   };
 
   return (
