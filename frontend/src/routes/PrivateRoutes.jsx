@@ -14,6 +14,7 @@ import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import RaportPage from '../pages/private/RaportPage';
 import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
+import LearningSectionVideocomponent from '../pages/private/mycourses/learningSectionVideo';
 
 const PrivateRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
             <Route path="/dashboard/raport" element={<RaportPage />} />
             <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
+            <Route path="/dashboard/mycourses/learningsectionvideo/:course_id" element={<LearningSectionVideocomponent />} />
         </Routes>
     );
 };
