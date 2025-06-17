@@ -90,26 +90,6 @@ const Sidebar = () => {
               Social Links
             </Link>
           </li>
-          <li>
-            <Link
-              to="/dashboard/setting/subscriptions"
-              onClick={handleCloseMenu}
-              className={`flex items-center ${
-                isActive("/dashboard/setting/subscriptions")
-                  ? "text-blue-600"
-                  : "text-gray-600"
-              }`}
-            >
-              <i
-                className={`fas fa-credit-card mr-2 ${
-                  isActive("/dashboard/setting/subscriptions")
-                    ? "text-blue-600"
-                    : "text-gray-600"
-                }`}
-              ></i>
-              Subscriptions
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

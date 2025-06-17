@@ -19,6 +19,9 @@ const Profile = () => {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  // Modal state: null | "delete" | "logout"
+  const [modalType, setModalType] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
@@ -41,6 +44,82 @@ const Profile = () => {
     // No backend call: just keep the data in state
     alert("Profil berhasil diperbarui! (Demo only, no backend call)");
   };
+
+  // Modal handlers
+  const handleDeleteClick = () => setModalType("delete");
+  const handleLogoutClick = () => setModalType("logout");
+  const handleModalCancel = () => setModalType(null);
+
+  // These would be replaced with real actions in a full app
+  const handleConfirmDelete = () => {
+    setModalType(null);
+    alert("Account deleted! (Demo only, no backend call)");
+  };
+  const handleConfirmLogout = () => {
+    setModalType(null);
+    alert("Logged out! (Demo only, no backend call)");
+  };
+
+  // Modal components
+  const DeleteModal = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div className="bg-white border border-red-300 rounded-lg p-6 max-w-sm w-full shadow-lg">
+        <div className="flex items-center mb-3">
+          <span className="text-red-600 text-2xl mr-2">
+            <i className="fas fa-exclamation-octagon"></i>
+          </span>
+          <span className="text-red-600 text-lg font-bold">Are you absolutely sure?</span>
+        </div>
+        <div className="text-red-600 mb-6">
+          Are you sure you want to delete your account? This action is permanent and cannot be undone.
+        </div>
+        <div className="flex justify-end space-x-3">
+          <button
+            onClick={handleModalCancel}
+            className="border border-red-600 text-red-600 rounded-lg px-5 py-2 bg-white hover:bg-red-50 font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className="bg-red-600 text-white rounded-lg px-5 py-2 font-semibold hover:bg-red-700"
+          >
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const LogoutModal = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div className="bg-white border border-blue-300 rounded-lg p-6 max-w-sm w-full shadow-lg">
+        <div className="flex items-center mb-3">
+          <span className="text-blue-600 text-2xl mr-2">
+            <i className="fas fa-info-circle"></i>
+          </span>
+          <span className="text-blue-600 text-lg font-bold">Are you absolutely sure?</span>
+        </div>
+        <div className="text-blue-600 mb-6">
+          Are you sure you want to logout? You will need to log in again to access your account.
+        </div>
+        <div className="flex justify-end space-x-3">
+          <button
+            onClick={handleModalCancel}
+            className="border border-blue-600 text-blue-600 rounded-lg px-5 py-2 bg-white hover:bg-blue-50 font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleConfirmLogout}
+            className="bg-blue-600 text-white rounded-lg px-5 py-2 font-semibold hover:bg-blue-700"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <LayoutWithSidebar>
@@ -332,18 +411,23 @@ const Profile = () => {
               <button
                 className="bg-red-600 text-white px-4 py-2 rounded-lg"
                 type="button"
+                onClick={handleDeleteClick}
               >
                 Delete Account
               </button>
               <button
                 className="bg-red-600 text-white px-4 py-2 rounded-lg"
                 type="button"
+                onClick={handleLogoutClick}
               >
                 Logout
               </button>
             </div>
           </div>
         </form>
+        {/* Modals */}
+        {modalType === "delete" && <DeleteModal />}
+        {modalType === "logout" && <LogoutModal />}
       </div>
     </LayoutWithSidebar>
   );
