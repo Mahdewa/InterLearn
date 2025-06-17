@@ -87,11 +87,11 @@ const LoginPage = () => {
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">Remember me</label>
               </div>
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <Link className="font-medium text-blue-600 hover:text-blue-500" to="/forgotpassword">
                   Forgot Password?
                 </Link>
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -103,16 +103,16 @@ const LoginPage = () => {
               </button>
             </div>
             
-            <div className="relative my-4">
+            {/* <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">Or</span>
               </div>
-            </div>
+            </div> */}
 
-            <button
+            {/* <button
               type="button"
               className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               onClick={() => navigate('/dashboard/home')} // Also navigate on Google login for consistency
@@ -136,7 +136,7 @@ const LoginPage = () => {
                 />
               </svg>
               Sign In With Google
-            </button>
+            </button> */}
       
             <p className="mt-2 text-center text-sm text-gray-600">
               Haven't an Account? <Link className="font-medium text-blue-600 hover:text-blue-500" to="/register">
