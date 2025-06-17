@@ -53,13 +53,13 @@ const courses = [
         {/* Tabs */}
         <div className="flex space-x-4 mb-6">
           <NavLink
-            to="/dashboard/mycourses/inprogressnone"
+            to="/dashboard/user/mycourses/inprogressnone"
             className="bg-gray-200 text-gray-600 px-4 py-2 rounded"
           >
             In Progress
           </NavLink>
           <NavLink
-            to="/dashboard/mycourses/inprogressnone"
+            to="/dashboard/user/mycourses/inprogressnone"
              className="bg-blue-600 text-white px-4 py-2 rounded"
           >
             Completed

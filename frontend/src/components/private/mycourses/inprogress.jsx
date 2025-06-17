@@ -39,7 +39,7 @@ const InProgress = () => {
             In Progress
           </button>
           <NavLink
-            to="/dashboard/mycourses/Completednone"
+            to="/dashboard/user/mycourses/Completednone"
             className="bg-gray-200 text-gray-600 px-4 py-2 rounded"
           >
             Completed
@@ -81,7 +81,7 @@ const InProgress = () => {
                   ></div>
                 </div>
                 <NavLink
-                  to="/dashboard/mycourses/learningsectionvideo/:course_id"
+                  to="/dashboard/user/mycourses/learningsectionvideo/:course_id"
                   className="bg-blue-600 text-white px-4 py-2 rounded"
                 >
                   Dive Back In

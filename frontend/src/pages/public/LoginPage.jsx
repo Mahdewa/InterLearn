@@ -32,7 +32,7 @@ const LoginPage = () => {
       if (data.role== 'pengajar'){
         navigate('/dashboard/lecturer/home');
       } else {
-        navigate('/dashboard/home/user');
+        navigate('/dashboard/user/home');
       }
     } else {
       alert(data.message || 'Login failed');

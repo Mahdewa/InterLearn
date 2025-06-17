@@ -8,7 +8,7 @@ const InProgressNone = () => {
         <div className="flex space-x-4 mb-6">
           <button className="bg-blue-600 text-white px-4 py-2 rounded">In Progress</button>
           <NavLink
-            to="/dashboard/mycourses/Completednone"
+            to="/dashboard/user/mycourses/Completednone"
             className="bg-gray-200 text-gray-600 px-4 py-2 rounded"
           >
             Completed

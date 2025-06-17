@@ -21,24 +21,29 @@ import AddRapot from '../pages/private/pengajar/AddRapot';
 const PrivateRoutes = () => {
     return (
         <Routes>
-            <Route path="/dashboard/home/user" element={<DashboardPage />} />
-            <Route path="/dashboard/lecturer/home" element={<PengajarDashboardPage />} />
-            <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
-            <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
-            <Route path="/dashboard/detailcontent" element={<DetailContent />} />
-            <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
-            <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
-            <Route path="/dashboard/mycourses" element={<Inprogress />} />
+            // Route Student
+            <Route path="/dashboard/user/home" element={<DashboardPage />} />
+            <Route path="/dashboard/user/detailcontent" element={<DetailContent />} />
+            <Route path="/dashboard/user/mycourses/Inprogressnone" element={<InprogressNone />} />
+            <Route path="/dashboard/user/mycourses/Completednone" element={<CompletedNone />} />
+            <Route path="/dashboard/user/mycourses" element={<Inprogress />} />
             <Route path="/dashboard/workshop/learningquiz" element={<LearningQuizPage />} />
             <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />
             <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
             <Route path="/dashboard/workshop/learningviewdetail" element={<LearningViewQuizPage />} />
+            <Route path="/dashboard/user/raport" element={<RaportPage />} />
+            <Route path="/dashboard/user/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
+            <Route path="/dashboard/user/mycourses/learningsectionvideo/:course_id" element={<LearningSectionVideocomponent />} />
+
+            //Route Lecturer
+            <Route path="/dashboard/lecturer/home" element={<PengajarDashboardPage />} />
+            <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
+            <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
+
+
             <Route path="/dashboard/setting" element={<ProfilePage />} />
             <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
             <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
-            <Route path="/dashboard/raport" element={<RaportPage />} />
-            <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
-            <Route path="/dashboard/mycourses/learningsectionvideo/:course_id" element={<LearningSectionVideocomponent />} />
         </Routes>
     );
 };
