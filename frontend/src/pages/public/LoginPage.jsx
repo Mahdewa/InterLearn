@@ -30,7 +30,7 @@ const LoginPage = () => {
 
       // Arahkan ke dashboard
       if (data.role== 'pengajar'){
-        navigate('/dashboard/home/pengajar');
+        navigate('/dashboard/lecturer/home');
       } else {
         navigate('/dashboard/home/user');
       }
