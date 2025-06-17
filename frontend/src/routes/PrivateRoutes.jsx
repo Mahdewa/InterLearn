@@ -11,6 +11,7 @@ import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail'
 import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
+import RaportPage from '../pages/private/RaportPage';
 
 const PrivateRoutes = () => {
     return (
@@ -27,6 +28,7 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/setting" element={<ProfilePage />} />
             <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
             <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
+            <Route path="/dashboard/raport" element={<RaportPage />} />
         </Routes>
     );
 };
