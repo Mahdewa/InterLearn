@@ -40,6 +40,8 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/lecturer/home" element={<PengajarDashboardPage />} />
             <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
             <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
+            <Route path="/dashboard/lecturer/detailcontent" element={<DetailContent />} />
+            <Route path="/dashboard/lecturer/setting" element={<ProfilePage />} />
 
 
             <Route path="/dashboard/setting" element={<ProfilePage />} />

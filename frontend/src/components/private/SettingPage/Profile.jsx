@@ -9,19 +9,17 @@ const Profile = () => {
 
   const backend = "http://localhost:5000";
 
-  // Ambil profil saat mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(`${backend}/api/userprofile`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setProfile(res.data.data);
-        setInitialProfile(res.data.data); // Simpan data awal
+        const userId = localStorage.getItem("userId");
+        if (!userId) return alert("User belum login atau userId tidak ditemukan.");
 
+        const res = await axios.get(`${backend}/api/userprofile/public/${userId}`);
+        setProfile(res.data.data);
+        setInitialProfile(res.data.data);
       } catch (e) {
-        console.error(e.response?.data || e.message);
+        console.error("Gagal mengambil profil:", e.response?.data || e.message);
       } finally {
         setLoading(false);
       }
@@ -37,6 +35,7 @@ const Profile = () => {
   const handleUploadPhoto = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onloadend = () => {
       setProfile((prev) => ({ ...prev, image_url: reader.result }));
@@ -46,7 +45,6 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const isSame = JSON.stringify(profile) === JSON.stringify(initialProfile);
     if (isSame) {
       alert("Tidak ada perubahan untuk disimpan.");
@@ -63,32 +61,34 @@ const Profile = () => {
       setInitialProfile(profile);
       setIsEditing(false);
     } catch (e) {
-      console.error(e.response?.data || e.message);
+      console.error("Update gagal:", e.response?.data || e.message);
       alert("Update gagal");
     }
   };
 
   if (loading) return <div>Memuat...</div>;
+  if (!profile) return <div>Profil tidak ditemukan.</div>;
 
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Profil Saya</h2>
-        {/* Foto Profil */}
-        <div className="flex flex-col items-center mb-6">
-          <img
-            src={profile.image_url || "public/default-avatar.png"}
-            alt="Profile"
-            className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
+
+      {/* Foto Profil */}
+      <div className="flex flex-col items-center mb-6">
+        <img
+          src={profile.image_url || "https://avatars.githubusercontent.com/u/1?v=4"}
+          alt="Profile"
+          className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
+        />
+        {isEditing && (
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleUploadPhoto}
+            className="mt-2"
           />
-          {isEditing && (
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleUploadPhoto}
-              className="mt-2"
-            />
-          )}
-        </div>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Nama */}
@@ -97,7 +97,7 @@ const Profile = () => {
           <input
             type="text"
             name="nama"
-            value={profile.user.nama}
+            value={profile.user?.nama || ""}
             disabled
             className="w-full p-2 border rounded bg-gray-100"
           />
@@ -109,7 +109,7 @@ const Profile = () => {
           <input
             type="email"
             name="email"
-            value={profile.user.email}
+            value={profile.user?.email || ""}
             disabled
             className="w-full p-2 border rounded bg-gray-100"
           />
@@ -121,16 +121,15 @@ const Profile = () => {
           <input
             type="text"
             name="username"
-            value={profile.username}
+            value={profile.username || ""}
             onChange={handleChange}
             disabled={!isEditing}
             className="w-full p-2 border rounded"
           />
         </div>
 
-        {/* Sisa form fields */}
+        {/* Lain-lain */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* date_of_birth */}
           <div>
             <label>Tanggal Lahir</label>
             <input
@@ -142,7 +141,6 @@ const Profile = () => {
               className="w-full p-2 border rounded"
             />
           </div>
-          {/* gender */}
           <div>
             <label>Gender</label>
             <select
@@ -158,45 +156,41 @@ const Profile = () => {
               <option value="other">Other</option>
             </select>
           </div>
-          {/* phone_number */}
           <div>
             <label>No. HP</label>
             <input
               name="phone_number"
               type="text"
-              value={profile.phone_number}
+              value={profile.phone_number || ""}
               onChange={handleChange}
               disabled={!isEditing}
               className="w-full p-2 border rounded"
             />
           </div>
-          {/* city */}
           <div>
             <label>Kota</label>
             <input
               name="city"
               type="text"
-              value={profile.city}
+              value={profile.city || ""}
               onChange={handleChange}
               disabled={!isEditing}
               className="w-full p-2 border rounded"
             />
           </div>
-          {/* company */}
           <div>
             <label>Perusahaan</label>
             <input
               name="company"
               type="text"
-              value={profile.company}
+              value={profile.company || ""}
               onChange={handleChange}
               disabled={!isEditing}
               className="w-full p-2 border rounded"
             />
           </div>
-          {/* role */}
           <div>
-            <label>Peran</label>
+            <label>Role</label>
             <input
               type="text"
               name="role"
@@ -212,48 +206,48 @@ const Profile = () => {
           <label>Bio</label>
           <textarea
             name="bio"
-            value={profile.bio}
+            value={profile.bio || ""}
             onChange={handleChange}
             disabled={!isEditing}
             className="w-full p-2 border rounded"
           />
         </div>
 
-        {/* Buttons */}
+        {/* Tombol Aksi */}
         <div className="flex justify-end gap-2">
           {isEditing ? (
             <>
-            <button
-              type="submit"
-              disabled={JSON.stringify(profile) === JSON.stringify(initialProfile)}
-              className={`px-4 py-2 rounded text-white ${
-                JSON.stringify(profile) === JSON.stringify(initialProfile)
-                  ? "bg-green-300 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
-            >
-              Simpan
-            </button>
+              <button
+                type="submit"
+                disabled={JSON.stringify(profile) === JSON.stringify(initialProfile)}
+                className={`px-4 py-2 rounded text-white ${
+                  JSON.stringify(profile) === JSON.stringify(initialProfile)
+                    ? "bg-green-300 cursor-not-allowed"
+                    : "bg-green-600 hover:bg-green-700"
+                }`}
+              >
+                Simpan
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setProfile(initialProfile);
+                  setIsEditing(false);
+                }}
+                className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
+              >
+                Batal
+              </button>
+            </>
+          ) : (
             <button
               type="button"
-              onClick={() => {
-                setProfile(initialProfile); // Reset kembali ke data awal
-                setIsEditing(false);
-              }}
-              className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
+              onClick={() => setIsEditing(true)}
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
             >
-              Batal
+              Edit Profil
             </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setIsEditing(true)}
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-          >
-            Edit Profil
-          </button>
           )}
         </div>
       </form>
