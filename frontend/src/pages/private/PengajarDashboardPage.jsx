@@ -1,4 +1,4 @@
-import Navbar from '../../components/private/Shared/Navbar';
+import NavbarPengajar from '../../components/private/Shared/NavbarPengajar';
 import Recently from '../../components/private/DashboardPage/Recently';
 import Trending from '../../components/private/DashboardPage/Trending';
 import Personalized from '../../components/private/DashboardPage/Personalized';
@@ -8,7 +8,7 @@ import Footer from '../../components/public/shared/Footer';
 const DashboardPage = () => {
     return (
         <div>
-            <Navbar />
+            <NavbarPengajar />
             <Recently />
             <Trending />
             <Personalized />

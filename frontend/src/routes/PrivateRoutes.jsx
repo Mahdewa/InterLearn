@@ -15,12 +15,16 @@ import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import RaportPage from '../pages/private/RaportPage';
 import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
 import LearningSectionVideocomponent from '../pages/private/mycourses/learningSectionVideo';
+import AddCourse from '../pages/private/pengajar/AddCourses';
+import AddRapot from '../pages/private/pengajar/AddRapot';
 
 const PrivateRoutes = () => {
     return (
         <Routes>
             <Route path="/dashboard/home/user" element={<DashboardPage />} />
-            <Route path="/dashboard/home/pengajar" element={<PengajarDashboardPage />} />
+            <Route path="/dashboard/lecturer/home" element={<PengajarDashboardPage />} />
+            <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
+            <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
             <Route path="/dashboard/detailcontent" element={<DetailContent />} />
             <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
             <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
