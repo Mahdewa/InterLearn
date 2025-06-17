@@ -61,10 +61,6 @@ const MyCourses = () => {
               </p>
               <p className="mb-2"><b>Teks Penjelasan:</b> {materi.teksPenjelasan || <span className="text-gray-500">Tidak ada</span>}</p>
               <div className="mb-2">
-                <b>Dibuat oleh:</b>{" "}
-                {materi.dibuatOleh?.nama || materi.dibuatOleh?._id || <span className="text-gray-500">Tidak diketahui</span>}
-              </div>
-              <div className="mb-2">
                 <b>Tanggal dibuat:</b>{" "}
                 {materi.createdAt ? formatDate(materi.createdAt) : <span className="text-gray-500">Tidak diketahui</span>}
               </div>
