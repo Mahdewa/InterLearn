@@ -163,7 +163,7 @@ const Navbar = () => {
 
         {/* Navigation Links (Desktop) */}
         <div className="hidden md:flex items-center space-x-8 p-4 bg-white border-t">
-          {['Home', 'My Courses', 'Raport', 'Community', 'Setting'].map((page) => (
+          {['Home', 'My Courses', 'Raport', 'Setting'].map((page) => (
             <NavLink
               key={page}
               to={`/dashboard/${page.toLowerCase().replace(' ', '')}`}
@@ -188,7 +188,7 @@ const Navbar = () => {
             className="w-full mb-4 p-2 rounded-full bg-gray-100 text-gray-500"
           />
           <nav className="space-y-2">
-            {['Home', 'My Courses', 'Raport', 'Community', 'Setting'].map((page) => (
+            {['Home', 'My Courses', 'Raport', 'Setting'].map((page) => (
               <NavLink
                 key={page}
                 to={`/dashboard/${page.toLowerCase().replace(' ', '')}`}

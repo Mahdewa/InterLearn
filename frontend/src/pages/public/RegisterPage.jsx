@@ -10,20 +10,44 @@ const RegisterPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    // Simpan email untuk digunakan di halaman verifikasi
-    // localStorage.setItem('verificationEmail', email);
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
 
-    // Tampilkan popup sukses
-    setShowPopup(true);
+  try {
+    const response = await fetch('http://localhost:5000/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+    });
 
-    // Navigasi ke halaman login setelah 2 detik
-    setTimeout(() => {
-      setShowPopup(false);
-      navigate('/login');
-    }, 2000);
+    const data = await response.json();
+
+    if (response.ok) {
+      // Registrasi berhasil
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate('/login');
+      }, 2000);
+    } else {
+      // Tampilkan pesan error dari backend
+      alert(data.message || 'Registration failed');
+    }
+  } catch (error) {
+      console.error('Registration error:', error);
+      alert('Something went wrong. Please try again later.');
+    }
   };
 
   return (

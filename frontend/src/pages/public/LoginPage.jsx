@@ -8,14 +8,35 @@ const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate(); // Add useNavigate hook to enable navigation
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    
-    // Simulate successful login
-    console.log('Login clicked with:', { email, password, rememberMe });
-    
-    // Navigate to dashboard/home after form submission
-    navigate('/dashboard/home');
+
+  try {
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Simpan token (jika ada)
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+
+      // Arahkan ke dashboard
+      navigate('/dashboard/home');
+    } else {
+      alert(data.message || 'Login failed');
+    }
+  } catch (error) {
+      console.error('Login error:', error);
+      alert('Something went wrong. Please try again later.');
+    }
   };
 
   return (
