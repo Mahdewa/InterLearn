@@ -74,7 +74,7 @@ const LearningSectionComent = () => {
   // Handler for breadcrumbs
   const handleBreadcrumbClick = (name) => {
     if (name === "My Courses") {
-      navigate("/dashboard/mycourses/Inprogressnone");
+      navigate("/dashboard/mycourses");
     }
   };
 
