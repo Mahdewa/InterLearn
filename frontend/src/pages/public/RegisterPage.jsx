@@ -8,6 +8,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [role, setRole] = useState('user')
   const navigate = useNavigate();
 
   const handleSubmit = async(e) => {
@@ -28,6 +29,7 @@ const RegisterPage = () => {
         username,
         email,
         password,
+        role,
       }),
     });
 
@@ -120,6 +122,21 @@ const RegisterPage = () => {
                 />
               </div>
               <div className="text-xs text-gray-500">Enter your email</div>
+            </div>
+
+            {/* Role Selector */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Role*</label>
+              <select
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+              >
+                <option value="murid">Murid</option>
+                <option value="pengajar">Pengajar</option>
+              </select>
+              <div className="text-xs text-gray-500">Select your role</div>
             </div>
 
             {/* Password */}

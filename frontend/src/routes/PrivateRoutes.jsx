@@ -17,7 +17,7 @@ import RaportPage from '../pages/private/RaportPage';
 const PrivateRoutes = () => {
     return (
         <Routes>
-            <Route path="/dashboard/home" element={<DashboardPage />} />
+            <Route path="/dashboard/home/user" element={<DashboardPage />} />
             <Route path="/dashboard/home/pengajar" element={<PengajarDashboardPage />} />
             <Route path="/dashboard/detailcontent" element={<DetailContent />} />
             <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />

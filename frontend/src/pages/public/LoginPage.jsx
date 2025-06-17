@@ -29,7 +29,11 @@ const LoginPage = () => {
       }
 
       // Arahkan ke dashboard
-      navigate('/dashboard/home');
+      if (data.role== 'pengajar'){
+        navigate('/dashboard/home/pengajar');
+      } else {
+        navigate('/dashboard/home/user');
+      }
     } else {
       alert(data.message || 'Login failed');
     }
