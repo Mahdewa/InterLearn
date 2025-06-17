@@ -8,6 +8,7 @@ import LearningQuizPage from '../pages/private/mycourses/learningquiz';
 import LearningStartQuizPage from '../pages/private/mycourses/learningstartquiz';
 import LearningafterQuizPage from '../pages/private/mycourses/learningafterquiz';
 import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail';
+import ProfilePage from '../pages/private/settings/ProfilePage';
 
 const PrivateRoutes = () => {
     return (
@@ -21,6 +22,7 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />
             <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
             <Route path="/dashboard/workshop/learningviewdetail" element={<LearningViewQuizPage />} />
+            <Route path="/dashboard/setting" element={<ProfilePage />} />
         </Routes>
     );
 };
