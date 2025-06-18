@@ -191,7 +191,7 @@ const Navbar = () => {
             {['Home', 'My Courses', 'Raport', 'Setting'].map((page) => (
               <NavLink
                 key={page}
-                to={`/dashboard/${page.toLowerCase().replace(' ', '')}`}
+                to={`/dashboard/user/${page.toLowerCase().replace(' ', '')}`}
                 className={({ isActive }) =>
                   `block p-2 rounded ${
                     isActive ? 'bg-blue-600 text-white' : 'text-gray-500'

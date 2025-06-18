@@ -10,6 +10,7 @@ import LearningStartQuizPage from '../pages/private/mycourses/learningstartquiz'
 import LearningafterQuizPage from '../pages/private/mycourses/learningafterquiz';
 import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail';
 import ProfilePage from '../pages/private/settings/ProfilePage';
+import ProfilePagePengajar from '../pages/private/settings/ProfilePagePengajar';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import RaportPage from '../pages/private/RaportPage';
@@ -41,12 +42,12 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
             <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
             <Route path="/dashboard/lecturer/detailcontent" element={<DetailContent />} />
-            <Route path="/dashboard/lecturer/setting" element={<ProfilePage />} />
+            <Route path="/dashboard/lecturer/setting" element={<ProfilePagePengajar />} />
 
 
-            <Route path="/dashboard/setting" element={<ProfilePage />} />
+            {/* <Route path="/dashboard/setting" element={<ProfilePage />} />
             <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
-            <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
+            <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} /> */}
         </Routes>
     );
 };
