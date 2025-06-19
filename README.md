@@ -238,7 +238,7 @@
     ```
     
 ### Submit Jawaban Quiz
-- `POST /api/quiz/id_materi`
+- `POST /api/quiz/submit/id_materi`
   - Headers: Content-Type: application/json
   - Authorization : Bearer Token
   - Role : user
