@@ -144,7 +144,7 @@
     ```
 
 ### Hapus Materi 
-- `PUT /api/materi/id_materi`
+- `DEL /api/materi/id_materi`
   - Headers: Content-Type: application/json
   - Authorization : Bearer Token
   - Response:
@@ -159,7 +159,7 @@
 ## Endpoint Quiz
 
 ### Buat Quiz
-- `PUT /api/quiz/id_materi`
+- `POST /api/quiz/id_materi`
   - Headers: Content-Type: application/json
   - Authorization : Bearer Token
   - Role : pengajar, admin
@@ -208,7 +208,7 @@
     ```
 
 ### Tampil Quiz by Materi
-- `PUT /api/quiz/id_materi`
+- `GET /api/quiz/id_materi`
   - Headers: Content-Type: application/json
   - Authorization : Bearer Token
   - Role : user
@@ -238,7 +238,7 @@
     ```
     
 ### Submit Jawaban Quiz
-- `PUT /api/quiz/id_materi`
+- `POST /api/quiz/id_materi`
   - Headers: Content-Type: application/json
   - Authorization : Bearer Token
   - Role : user
