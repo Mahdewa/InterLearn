@@ -62,7 +62,7 @@ const ProfilePengajar = () => {
       setIsEditing(false);
     } catch (e) {
       console.error("Update gagal:", e.response?.data || e.message);
-      alert("Update gagal");
+      alert("Update gagal, ukuran foto terlalu besar.");
     }
   };
 
@@ -76,7 +76,7 @@ const ProfilePengajar = () => {
       {/* Foto Profil */}
       <div className="flex flex-col items-center mb-6">
         <img
-          src={profile.image_url || "https://avatars.githubusercontent.com/u/1?v=4"}
+          src={profile.image_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
           alt="Profile"
           className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
         />

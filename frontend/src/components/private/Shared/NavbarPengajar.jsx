@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '/logo/logo.png';
+import axios from 'axios';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -10,10 +11,8 @@ const Navbar = () => {
   const notificationRef = useRef(null);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [profile, setProfile] = useState({
-    image_url: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", // default image
-    username: ""
-  });
+  const [profile, setProfile] = useState();
+  const [loadingProfile, setLoadingProfile] = useState(true);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -49,28 +48,18 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
     const fetchProfile = async () => {
+      setLoadingProfile(true);
       try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("/api/auth/profile", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Gagal mendapatkan data profil");
-        }
-
-        const data = await response.json();
-        setProfile({
-          image_url: data.image_url || profile.image_url, // Gunakan default jika tidak ada
-          username: data.username || ""
-        });
+        const res = await axios.get(`https://be-inter-learn.vercel.app/api/userprofile/public/${userId}`);
+        setProfile(res.data.data);
       } catch (error) {
-        console.error("Error:", error);
+        setProfile(null);
+      } finally {
+        setLoadingProfile(false);
       }
     };
 
@@ -79,8 +68,14 @@ const Navbar = () => {
     }
   }, [isAuthenticated]);
 
+  const fotoUrl = profile?.image_url
+  ? (profile.image_url.startsWith('http') || profile.image_url.startsWith('data:'))
+    ? profile.image_url
+    : `https://be-inter-learn.vercel.app/${profile.image_url}`
+  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     setIsAuthenticated(false);
     navigate('/');
   };
@@ -103,22 +98,8 @@ const Navbar = () => {
             <i className="fas fa-bars"></i>
           </button>
 
-          {/* Search Bar (Desktop) */}
-          <div className="hidden md:flex items-center flex-grow mx-4">
-            <input
-              type="text"
-              placeholder="Type a command or search..."
-              className="w-full p-2 rounded-full bg-gray-100 text-gray-500"
-            />
-          </div>
-
           {/* Icons */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center text-blue-600">
-              <i className="fas fa-circle"></i>
-              <span className="ml-1">95 Credits</span>
-            </div>
-
             {/* Notifications */}
             <div className="relative" ref={notificationRef}>
               <i
@@ -140,12 +121,19 @@ const Navbar = () => {
 
             {/* User Dropdown */}
             <div className="relative" ref={dropdownRef}>
-              <img
-                src={profile.image_url}
-                alt={`Foto profil ${profile.username}`}
-                className="w-10 h-10 rounded-full cursor-pointer"
-                onClick={() => setIsDropdownOpen((prev) => !prev)}
-              />
+              {
+                loadingProfile ? (
+                  // Bisa pakai spinner atau skeleton loader
+                  <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+                ) : (
+                  <img
+                    src={fotoUrl}
+                    alt="Foto Profile"
+                    className="w-10 h-10 rounded-full cursor-pointer"
+                    onClick={() => setIsDropdownOpen((prev) => !prev)}
+                  />
+                  )
+              }
 
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md border">
