@@ -39,15 +39,27 @@ export default function ShowRapot() {
         <div className="text-center text-gray-500">Kamu Belum Mengerjakan Apapun...</div>
       )}
       {rapot.length > 0 && (
-        <div>
-          <h4>Nilai Rapot:</h4>
-          <ul>
-            {rapot.map(item => (
-              <li key={item._id}>
-                Materi: {item.materi?.judul || '-'}, Nilai: {item.skor}, Tanggal: {new Date(item.tanggal).toLocaleDateString()}
-              </li>
-            ))}
-          </ul>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-300">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="border px-4 py-2">No</th>
+                <th className="border px-4 py-2">Materi</th>
+                <th className="border px-4 py-2">Nilai</th>
+                <th className="border px-4 py-2">Tanggal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rapot.map((item, idx) => (
+                <tr key={item._id}>
+                  <td className="border px-4 py-2 text-center">{idx + 1}</td>
+                  <td className="border px-4 py-2 text-center">{item.materi?.judul || '-'}</td>
+                  <td className="border px-4 py-2 text-center">{item.skor}</td>
+                  <td className="border px-4 py-2 text-center">{new Date(item.tanggal).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
