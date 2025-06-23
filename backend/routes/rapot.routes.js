@@ -12,7 +12,4 @@ router.get('/user/:userId', rapotController.getRapotByUser);
 // Update rapot berdasarkan ID
 router.put('/:id', verifyToken, isPengajar, rapotController.updateRapotById);
 
-// Hapus rapot berdasarkan ID
-router.delete('/:id', verifyToken, isPengajar, rapotController.deleteRapotById);
-
 module.exports = router;

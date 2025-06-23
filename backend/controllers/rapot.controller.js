@@ -43,17 +43,3 @@ exports.updateRapotById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// Hapus rapot berdasarkan ID
-exports.deleteRapotById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedRapot = await Rapot.findByIdAndDelete(id);
-    if (!deletedRapot) {
-      return res.status(404).json({ message: 'Rapot tidak ditemukan' });
-    }
-    res.json({ message: 'Rapot berhasil dihapus' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
