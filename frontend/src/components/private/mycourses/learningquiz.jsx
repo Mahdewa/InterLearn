@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Logo from '/logo/logo.png';
 
 // Sidebar data - same structure as learningviewdetail
@@ -17,38 +17,57 @@ const sidebarModules = [
   {
     title: "Module 2",
     subtitle: "Data Collection and Cleaning",
-    lessons: [],
+    lessons: [
+      "Lesson 2.1: Data Sources",
+      "Lesson 2.2: Data Cleaning Techniques",
+      "Lesson 2.3: Handling Missing Values",
+      "Quiz",
+    ],
   },
   {
     title: "Module 3",
     subtitle: "Data Manipulation with Excel & SQL",
-    lessons: [],
+    lessons: [
+      "Lesson 3.1: Excel Formulas & Functions",
+      "Lesson 3.2: SQL Basics",
+      "Lesson 3.3: Data Joins in SQL",
+      "Quiz",
+    ],
   },
   {
     title: "Module 4",
     subtitle: "Data Visualization with Power BI",
-    lessons: [],
+    lessons: [
+      "Lesson 4.1: Introduction to Power BI",
+      "Lesson 4.2: Creating Visualizations",
+      "Lesson 4.3: Dashboard Design",
+      "Quiz",
+    ],
   },
   {
     title: "Module 5",
     subtitle: "Basic Statistical Analysis",
-    lessons: [],
+    lessons: [
+      "Lesson 5.1: Descriptive Statistics",
+      "Lesson 5.2: Inferential Statistics",
+      "Lesson 5.3: Hypothesis Testing",
+      "Quiz",
+    ],
   },
   {
     title: "Module 6",
     subtitle: "Real-world Case Studies and Applications",
-    lessons: [],
+    lessons: [
+      "Lesson 6.1: Business Case Study",
+      "Lesson 6.2: Healthcare Data Analysis",
+      "Lesson 6.3: Social Media Analytics",
+      "Quiz",
+    ],
   },
 ];
 
-const Learningquiz = () => {
-  const navigate = useNavigate();
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  // For sidebar: track expanded/collapsed modules (only Module 1 open by default)
-  const [openModule, setOpenModule] = useState(0);
-
-  // Mock quiz data
-  const quizData = {
+const quizDataPerModule = [
+  {
     title: "Module 1: Introduction to Data Analysis",
     rules: {
       description: "The quiz aims to test your knowledge of the material Introduction to Data Analysis.",
@@ -65,16 +84,112 @@ const Learningquiz = () => {
       status: "Not Yet Handled",
       action: "-"
     }
-  };
+  },
+  {
+    title: "Module 2: Data Collection and Cleaning",
+    rules: {
+      description: "The quiz aims to test your knowledge of Data Collection and Cleaning.",
+      questionCount: 5,
+      conditions: [
+        "Passing score requirement: 80%",
+        "Exam duration: 5 minutes"
+      ],
+      retakeInfo: "If you do not meet the passing score, you must wait for 1 minute before retaking the quiz. Use the waiting time to review the previous material, okay?"
+    },
+    result: {
+      date: "-",
+      percentage: "-",
+      status: "Not Yet Handled",
+      action: "-"
+    }
+  },
+  {
+    title: "Module 3: Data Manipulation with Excel & SQL",
+    rules: {
+      description: "The quiz aims to test your knowledge of Data Manipulation with Excel & SQL.",
+      questionCount: 5,
+      conditions: [
+        "Passing score requirement: 80%",
+        "Exam duration: 5 minutes"
+      ],
+      retakeInfo: "If you do not meet the passing score, you must wait for 1 minute before retaking the quiz. Use the waiting time to review the previous material, okay?"
+    },
+    result: {
+      date: "-",
+      percentage: "-",
+      status: "Not Yet Handled",
+      action: "-"
+    }
+  },
+  {
+    title: "Module 4: Data Visualization with Power BI",
+    rules: {
+      description: "The quiz aims to test your knowledge of Data Visualization with Power BI.",
+      questionCount: 5,
+      conditions: [
+        "Passing score requirement: 80%",
+        "Exam duration: 5 minutes"
+      ],
+      retakeInfo: "If you do not meet the passing score, you must wait for 1 minute before retaking the quiz. Use the waiting time to review the previous material, okay?"
+    },
+    result: {
+      date: "-",
+      percentage: "-",
+      status: "Not Yet Handled",
+      action: "-"
+    }
+  },
+  {
+    title: "Module 5: Basic Statistical Analysis",
+    rules: {
+      description: "The quiz aims to test your knowledge of Basic Statistical Analysis.",
+      questionCount: 5,
+      conditions: [
+        "Passing score requirement: 80%",
+        "Exam duration: 5 minutes"
+      ],
+      retakeInfo: "If you do not meet the passing score, you must wait for 1 minute before retaking the quiz. Use the waiting time to review the previous material, okay?"
+    },
+    result: {
+      date: "-",
+      percentage: "-",
+      status: "Not Yet Handled",
+      action: "-"
+    }
+  },
+  {
+    title: "Module 6: Real-world Case Studies and Applications",
+    rules: {
+      description: "The quiz aims to test your knowledge of Real-world Case Studies and Applications.",
+      questionCount: 5,
+      conditions: [
+        "Passing score requirement: 80%",
+        "Exam duration: 5 minutes"
+      ],
+      retakeInfo: "If you do not meet the passing score, you must wait for 1 minute before retaking the quiz. Use the waiting time to review the previous material, okay?"
+    },
+    result: {
+      date: "-",
+      percentage: "-",
+      status: "Not Yet Handled",
+      action: "-"
+    }
+  },
+];
 
-  // Breadcrumb navigation links
-  const navigationLinks = [
-    { name: "Home", path: "/" },
-    { name: "My Courses", path: "/courses" },
-    { name: "Data Analysis Fundamentals", path: "/courses/data-analysis" },
-    { name: "Module 1", path: "/courses/data-analysis/module-1" },
-    { name: "Quiz", path: "/courses/data-analysis/module-1/quiz" }
-  ];
+const Learningquiz = () => {
+  const navigate = useNavigate();
+  const { course_id } = useParams();
+  const location = useLocation();
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+
+  // Ambil module dari query string (?module=2), default ke 1 jika tidak ada
+  const queryParams = new URLSearchParams(location.search);
+  const moduleParam = parseInt(queryParams.get("module") || "1", 10);
+  const moduleIdx = Math.max(1, Math.min(moduleParam, sidebarModules.length)) - 1;
+
+  const [openModule, setOpenModule] = useState(moduleIdx);
+  const quizData = quizDataPerModule[moduleIdx];
 
   const handleStartButtonClick = () => {
     setShowConfirmationDialog(true);
@@ -86,7 +201,8 @@ const Learningquiz = () => {
 
   const handleContinueConfirmation = () => {
     setShowConfirmationDialog(false);
-    navigate('/dashboard/workshop/learningstartquiz');
+    // Bawa module ke start quiz
+    navigate(`/dashboard/workshop/learningstartquiz?module=${moduleIdx + 1}`);
   };
 
   const handleGoBack = (path) => {
@@ -96,6 +212,20 @@ const Learningquiz = () => {
 
   const handleModuleClick = (idx) => {
     setOpenModule(idx === openModule ? null : idx);
+  };
+
+  const handleLessonClick = (lesson, modIdx, lessonIdx) => {
+    if (lesson === "Quiz") {
+      // Jika klik quiz di modul lain, pindah ke quiz modul itu
+      if (modIdx !== moduleIdx) {
+        navigate(`/dashboard/workshop/learningquiz?module=${modIdx + 1}`);
+      }
+      return;
+    }
+    // Navigasi ke halaman lesson sesuai module dan lesson
+    navigate(
+      `/dashboard/user/mycourses/learningsectionvideo/${course_id}?module=${modIdx + 1}&lesson=${lessonIdx + 1}`
+    );
   };
 
   // Header section, matched with learningviewdetail
@@ -119,7 +249,7 @@ const Learningquiz = () => {
               <li className="mx-1">&gt;</li>
               <li>Data Analysis Fundamentals</li>
               <li className="mx-1">&gt;</li>
-              <li>Module 1</li>
+              <li>{sidebarModules[moduleIdx].title}</li>
               <li className="mx-1">&gt;</li>
               <li>
                 <span className="text-blue-700 font-semibold">Quiz</span>
@@ -206,22 +336,10 @@ const Learningquiz = () => {
                           fontWeight: lesson === "Quiz" ? 600 : 400,
                           fontSize: lesson === "Quiz" ? "16px" : "15px"
                         }}
+                        onClick={() => handleLessonClick(lesson, idx, i)}
                       >
                         <span className="flex-1 truncate flex items-center gap-2">
-                          {/* Checkmark for all items in Module 1 */}
-                          {idx === 0 && (
-                            lesson === "Quiz" ? (
-                              <svg width="20" height="20" fill="none" className="mr-1" viewBox="0 0 20 20">
-                                <circle cx="10" cy="10" r="9" stroke="#2854C6" strokeWidth="1.5" fill="none"/>
-                                <path d="M7.5 10.5l2 2 3-4" stroke="#2854C6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            ) : (
-                              <svg width="20" height="20" fill="none" className="mr-1" viewBox="0 0 20 20">
-                                <circle cx="10" cy="10" r="9" stroke="#2FCB65" strokeWidth="1.5" fill="none"/>
-                                <path d="M7.5 10.5l2 2 3-4" stroke="#2FCB65" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            )
-                          )}
+                          {/* Logo centang dihilangkan */}
                           {lesson === "Quiz" ? (
                             <span>Quiz</span>
                           ) : (

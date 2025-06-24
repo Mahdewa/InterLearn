@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from '/logo/logo.png';
 
 // Sidebar data - same structure as learningviewdetail
@@ -17,38 +17,77 @@ const sidebarModules = [
   {
     title: "Module 2",
     subtitle: "Data Collection and Cleaning",
-    lessons: [],
+    lessons: [
+      "Lesson 2.1: Data Sources",
+      "Lesson 2.2: Data Cleaning Techniques",
+      "Lesson 2.3: Handling Missing Values",
+      "Quiz",
+    ],
   },
   {
     title: "Module 3",
     subtitle: "Data Manipulation with Excel & SQL",
-    lessons: [],
+    lessons: [
+      "Lesson 3.1: Excel Formulas & Functions",
+      "Lesson 3.2: SQL Basics",
+      "Lesson 3.3: Data Joins in SQL",
+      "Quiz",
+    ],
   },
   {
     title: "Module 4",
     subtitle: "Data Visualization with Power BI",
-    lessons: [],
+    lessons: [
+      "Lesson 4.1: Introduction to Power BI",
+      "Lesson 4.2: Creating Visualizations",
+      "Lesson 4.3: Dashboard Design",
+      "Quiz",
+    ],
   },
   {
     title: "Module 5",
     subtitle: "Basic Statistical Analysis",
-    lessons: [],
+    lessons: [
+      "Lesson 5.1: Descriptive Statistics",
+      "Lesson 5.2: Inferential Statistics",
+      "Lesson 5.3: Hypothesis Testing",
+      "Quiz",
+    ],
   },
   {
     title: "Module 6",
     subtitle: "Real-world Case Studies and Applications",
-    lessons: [],
+    lessons: [
+      "Lesson 6.1: Business Case Study",
+      "Lesson 6.2: Healthcare Data Analysis",
+      "Lesson 6.3: Social Media Analytics",
+      "Quiz",
+    ],
   },
 ];
 
 const Learningstartquiz = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // For sidebar: track expanded/collapsed modules (only Module 1 open by default)
-  const [openModule, setOpenModule] = useState(0);
+  const queryParams = new URLSearchParams(location.search);
+  const moduleParam = parseInt(queryParams.get("module") || "1", 10);
+  const moduleIdx = Math.max(1, Math.min(moduleParam, sidebarModules.length)) - 1;
+
+  const [openModule, setOpenModule] = useState(moduleIdx);
+  const [currentModuleIdx, setCurrentModuleIdx] = useState(moduleIdx);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const moduleParam = parseInt(queryParams.get("module") || "1", 10);
+    const idx = Math.max(1, Math.min(moduleParam, sidebarModules.length)) - 1;
+    setCurrentModuleIdx(idx);
+    setOpenModule(idx);
+  }, [location.search]);
 
   // Quiz states
-  const [currentQuestion, setCurrentQuestion] = useState(3); // Question 4 selected by default
+  const [currentQuestion, setCurrentQuestion] = useState(0); // Question 4 selected by default
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   // Timer states
@@ -87,59 +126,341 @@ const Learningstartquiz = () => {
     setOpenModule(idx === openModule ? null : idx);
   };
 
-  // Quiz questions data
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What is data analysis?",
-      options: [
-        "The process of collecting data only",
-        "The process of interpreting data to find insights",
-        "A software program for storing data",
-        "A type of database structure"
-      ]
-    },
-    {
-      id: 2,
-      question: "Which of these is NOT a type of data?",
-      options: [
-        "Quantitative",
-        "Qualitative",
-        "Categorical",
-        "Supervisory"
-      ]
-    },
-    {
-      id: 3,
-      question: "What tool is commonly used for data visualization?",
-      options: [
-        "Microsoft Word",
-        "Notepad",
-        "Power BI",
-        "Calculator"
-      ]
-    },
-    {
-      id: 4,
-      question: "What is the primary purpose of data analysis?",
-      options: [
-        "To organize data alphabetically",
-        "To make informed decisions based on insights derived from data",
-        "To collect as much data as possible",
-        "To replace manual processes with automated systems"
-      ]
-    },
-    {
-      id: 5,
-      question: "What is a key characteristic of good data analysis?",
-      options: [
-        "Using only one data source",
-        "Ignoring outliers",
-        "Reproducibility of results",
-        "Manual calculations only"
-      ]
+  const handleLessonClick = (lesson, modIdx, lessonIdx) => {
+    if (lesson === "Quiz") {
+      // Pindah ke quiz modul yang sesuai
+      navigate(`/dashboard/workshop/learningquiz?module=${modIdx + 1}`);
+    } else {
+      navigate(
+        `/dashboard/user/mycourses/learningsectionvideo/1?module=${modIdx + 1}&lesson=${lessonIdx + 1}`
+      );
     }
+  };
+
+  // Quiz questions data
+  const quizQuestionsPerModule = [
+    // Module 1: Introduction to Data Analysis
+    [
+      {
+        id: 1,
+        question: "What is data analysis?",
+        options: [
+          "The process of collecting data only",
+          "The process of interpreting data to find insights",
+          "A software program for storing data",
+          "A type of database structure"
+        ]
+      },
+      {
+        id: 2,
+        question: "Which of these is NOT a type of data?",
+        options: [
+          "Quantitative",
+          "Qualitative",
+          "Categorical",
+          "Supervisory"
+        ]
+      },
+      {
+        id: 3,
+        question: "What tool is commonly used for data visualization?",
+        options: [
+          "Microsoft Word",
+          "Notepad",
+          "Power BI",
+          "Calculator"
+        ]
+      },
+      {
+        id: 4,
+        question: "What is the primary purpose of data analysis?",
+        options: [
+          "To organize data alphabetically",
+          "To make informed decisions based on insights derived from data",
+          "To collect as much data as possible",
+          "To replace manual processes with automated systems"
+        ]
+      },
+      {
+        id: 5,
+        question: "What is a key characteristic of good data analysis?",
+        options: [
+          "Using only one data source",
+          "Ignoring outliers",
+          "Reproducibility of results",
+          "Manual calculations only"
+        ]
+      }
+    ],
+    // Module 2: Data Collection and Cleaning
+    [
+      {
+        id: 1,
+        question: "Which of the following is an example of primary data?",
+        options: [
+          "Data from a government report",
+          "Data collected from your own survey",
+          "Data from a published journal",
+          "Data from Wikipedia"
+        ]
+      },
+      {
+        id: 2,
+        question: "What is the main goal of data cleaning?",
+        options: [
+          "To make data look pretty",
+          "To remove errors and inconsistencies",
+          "To increase the amount of data",
+          "To change data types"
+        ]
+      },
+      {
+        id: 3,
+        question: "Which technique is used to handle missing values?",
+        options: [
+          "Imputation",
+          "Duplication",
+          "Encryption",
+          "Aggregation"
+        ]
+      },
+      {
+        id: 4,
+        question: "Which of the following is NOT a data source?",
+        options: [
+          "Internal company database",
+          "Social media",
+          "Weather forecast",
+          "Random guessing"
+        ]
+      },
+      {
+        id: 5,
+        question: "What is the first step in data cleaning?",
+        options: [
+          "Data visualization",
+          "Identifying and handling missing data",
+          "Model training",
+          "Reporting"
+        ]
+      }
+    ],
+    // Module 3: Data Manipulation with Excel & SQL
+    [
+      {
+        id: 1,
+        question: "Which Excel function is used to calculate the average of a range?",
+        options: [
+          "SUM",
+          "AVERAGE",
+          "COUNT",
+          "MIN"
+        ]
+      },
+      {
+        id: 2,
+        question: "Which SQL clause is used to filter records?",
+        options: [
+          "ORDER BY",
+          "WHERE",
+          "GROUP BY",
+          "SELECT"
+        ]
+      },
+      {
+        id: 3,
+        question: "What does a LEFT JOIN do in SQL?",
+        options: [
+          "Returns only matching rows from both tables",
+          "Returns all rows from the left table and matching rows from the right table",
+          "Returns all rows from the right table",
+          "Returns only unmatched rows"
+        ]
+      },
+      {
+        id: 4,
+        question: "Which Excel feature allows you to summarize data interactively?",
+        options: [
+          "Conditional Formatting",
+          "Pivot Table",
+          "Data Validation",
+          "VLOOKUP"
+        ]
+      },
+      {
+        id: 5,
+        question: "Which SQL command is used to add new data?",
+        options: [
+          "INSERT",
+          "UPDATE",
+          "DELETE",
+          "SELECT"
+        ]
+      }
+    ],
+    // Module 4: Data Visualization with Power BI
+    [
+      {
+        id: 1,
+        question: "Which tool is primarily used for creating dashboards?",
+        options: [
+          "Power BI",
+          "Notepad",
+          "Excel Solver",
+          "Paint"
+        ]
+      },
+      {
+        id: 2,
+        question: "Which chart is best for showing trends over time?",
+        options: [
+          "Pie chart",
+          "Line chart",
+          "Bar chart",
+          "Scatter plot"
+        ]
+      },
+      {
+        id: 3,
+        question: "What is a slicer in Power BI?",
+        options: [
+          "A type of chart",
+          "A filter for visualizations",
+          "A data source",
+          "A calculation"
+        ]
+      },
+      {
+        id: 4,
+        question: "Which file type can be imported into Power BI?",
+        options: [
+          ".pbix",
+          ".exe",
+          ".mp3",
+          ".jpg"
+        ]
+      },
+      {
+        id: 5,
+        question: "What is the main benefit of using Power BI?",
+        options: [
+          "Interactive data visualization",
+          "Writing code",
+          "Sending emails",
+          "Drawing images"
+        ]
+      }
+    ],
+    // Module 5: Basic Statistical Analysis
+    [
+      {
+        id: 1,
+        question: "What does 'mean' refer to in statistics?",
+        options: [
+          "The smallest value",
+          "The largest value",
+          "The average value",
+          "The most frequent value"
+        ]
+      },
+      {
+        id: 2,
+        question: "Which measure describes the spread of data?",
+        options: [
+          "Median",
+          "Mode",
+          "Standard deviation",
+          "Mean"
+        ]
+      },
+      {
+        id: 3,
+        question: "What is hypothesis testing used for?",
+        options: [
+          "To summarize data",
+          "To make inferences about a population",
+          "To visualize data",
+          "To clean data"
+        ]
+      },
+      {
+        id: 4,
+        question: "Which is NOT a type of inferential statistic?",
+        options: [
+          "Regression analysis",
+          "Hypothesis testing",
+          "Descriptive statistics",
+          "Confidence intervals"
+        ]
+      },
+      {
+        id: 5,
+        question: "What is the median?",
+        options: [
+          "The value that appears most frequently",
+          "The middle value when data is ordered",
+          "The sum of all values",
+          "The difference between max and min"
+        ]
+      }
+    ],
+    // Module 6: Real-world Case Studies and Applications
+    [
+      {
+        id: 1,
+        question: "Which industry can benefit from data analysis?",
+        options: [
+          "Healthcare",
+          "Retail",
+          "Education",
+          "All of the above"
+        ]
+      },
+      {
+        id: 2,
+        question: "What is a common use of data analysis in business?",
+        options: [
+          "Predicting sales trends",
+          "Sending newsletters",
+          "Designing logos",
+          "Making coffee"
+        ]
+      },
+      {
+        id: 3,
+        question: "How can data analysis help in healthcare?",
+        options: [
+          "Improving patient outcomes",
+          "Scheduling meetings",
+          "Ordering supplies",
+          "Painting walls"
+        ]
+      },
+      {
+        id: 4,
+        question: "What is social media analytics used for?",
+        options: [
+          "Understanding user behavior",
+          "Counting website visitors manually",
+          "Printing flyers",
+          "Making phone calls"
+        ]
+      },
+      {
+        id: 5,
+        question: "Which is an example of a real-world data analysis application?",
+        options: [
+          "Churn prediction",
+          "Guessing customer preferences",
+          "Ignoring data",
+          "Deleting all records"
+        ]
+      }
+    ]
   ];
+
+  // Gunakan quizQuestions sesuai modul yang sedang dibuka
+  const quizQuestions = quizQuestionsPerModule[moduleIdx];
 
   // Navigate to previous or next question
   const goToPrevQuestion = () => {
@@ -167,7 +488,8 @@ const Learningstartquiz = () => {
 
   const handleContinueEndQuiz = () => {
     setShowEndQuizModal(false);
-    navigate('/dashboard/mycourses/learningafterquiz');
+    // Bawa module ke halaman after quiz
+    navigate(`/dashboard/mycourses/learningafterquiz?module=${moduleIdx + 1}`);
   };
 
   const handleAnswerSelect = (index) => {
@@ -195,7 +517,7 @@ const Learningstartquiz = () => {
               <li className="mx-1">&gt;</li>
               <li>Data Analysis Fundamentals</li>
               <li className="mx-1">&gt;</li>
-              <li>Module 1</li>
+              <li>{sidebarModules[currentModuleIdx].title}</li>
               <li className="mx-1">&gt;</li>
               <li>
                 <span className="text-blue-700 font-semibold">Quiz</span>
@@ -282,22 +604,9 @@ const Learningstartquiz = () => {
                           fontWeight: lesson === "Quiz" ? 600 : 400,
                           fontSize: lesson === "Quiz" ? "16px" : "15px"
                         }}
+                        onClick={() => handleLessonClick(lesson, idx, i)}
                       >
                         <span className="flex-1 truncate flex items-center gap-2">
-                          {/* Checkmark for all items in Module 1 */}
-                          {idx === 0 && (
-                            lesson === "Quiz" ? (
-                              <svg width="20" height="20" fill="none" className="mr-1" viewBox="0 0 20 20">
-                                <circle cx="10" cy="10" r="9" stroke="#2854C6" strokeWidth="1.5" fill="none"/>
-                                <path d="M7.5 10.5l2 2 3-4" stroke="#2854C6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            ) : (
-                              <svg width="20" height="20" fill="none" className="mr-1" viewBox="0 0 20 20">
-                                <circle cx="10" cy="10" r="9" stroke="#2FCB65" strokeWidth="1.5" fill="none"/>
-                                <path d="M7.5 10.5l2 2 3-4" stroke="#2FCB65" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            )
-                          )}
                           {lesson === "Quiz" ? (
                             <span>Quiz</span>
                           ) : (
@@ -325,7 +634,9 @@ const Learningstartquiz = () => {
         <section className="flex-1">
           {/* Quiz header section */}
           <div className="border-b border-gray-200 p-6">
-            <h2 className="text-base font-medium">Questions category: Introduction to Data Analysis</h2>
+            <h2 className="text-base font-medium">
+              Questions category: {sidebarModules[currentModuleIdx].subtitle}
+            </h2>
             <div className="flex justify-between items-center mt-4">
               {/* Question navigation */}
               <div className="flex space-x-2">

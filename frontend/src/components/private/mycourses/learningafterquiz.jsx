@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Logo from "/logo/logo.png";
 
 // Sidebar data - same structure as learningviewdetail
@@ -17,36 +17,81 @@ const sidebarModules = [
   {
     title: "Module 2",
     subtitle: "Data Collection and Cleaning",
-    lessons: [],
+    lessons: [
+      "Lesson 2.1: Data Sources",
+      "Lesson 2.2: Data Cleaning Techniques",
+      "Lesson 2.3: Handling Missing Values",
+      "Quiz",
+    ],
   },
   {
     title: "Module 3",
     subtitle: "Data Manipulation with Excel & SQL",
-    lessons: [],
+    lessons: [
+      "Lesson 3.1: Excel Formulas & Functions",
+      "Lesson 3.2: SQL Basics",
+      "Lesson 3.3: Data Joins in SQL",
+      "Quiz",
+    ],
   },
   {
     title: "Module 4",
     subtitle: "Data Visualization with Power BI",
-    lessons: [],
+    lessons: [
+      "Lesson 4.1: Introduction to Power BI",
+      "Lesson 4.2: Creating Visualizations",
+      "Lesson 4.3: Dashboard Design",
+      "Quiz",
+    ],
   },
   {
     title: "Module 5",
     subtitle: "Basic Statistical Analysis",
-    lessons: [],
+    lessons: [
+      "Lesson 5.1: Descriptive Statistics",
+      "Lesson 5.2: Inferential Statistics",
+      "Lesson 5.3: Hypothesis Testing",
+      "Quiz",
+    ],
   },
   {
     title: "Module 6",
     subtitle: "Real-world Case Studies and Applications",
-    lessons: [],
+    lessons: [
+      "Lesson 6.1: Business Case Study",
+      "Lesson 6.2: Healthcare Data Analysis",
+      "Lesson 6.3: Social Media Analytics",
+      "Quiz",
+    ],
   },
 ];
 
 const Learningafterquiz = () => {
-  const [openModule, setOpenModule] = useState(0);
   const navigate = useNavigate();
+  const { course_id } = useParams();
+  const location = useLocation();
+
+  // Ambil module dari query string (?module=2), default ke 1 jika tidak ada
+  const queryParams = new URLSearchParams(location.search);
+  const moduleParam = parseInt(queryParams.get("module") || "1", 10);
+  const moduleIdx = Math.max(1, Math.min(moduleParam, sidebarModules.length)) - 1;
+
+  const [openModule, setOpenModule] = useState(moduleIdx);
 
   const handleModuleClick = (idx) => {
     setOpenModule(idx === openModule ? null : idx);
+  };
+
+  // Handler klik lesson di sidebar
+  const handleLessonClick = (lesson, modIdx, lessonIdx) => {
+    if (lesson === "Quiz") {
+      // Pindah ke quiz modul yang sesuai
+      navigate(`/dashboard/workshop/learningquiz?module=${modIdx + 1}`);
+    } else {
+      navigate(
+        `/dashboard/user/mycourses/learningsectionvideo/${course_id}?module=${modIdx + 1}&lesson=${lessonIdx + 1}`
+      );
+    }
   };
 
   const handleStartClick = () => {
@@ -78,7 +123,7 @@ const Learningafterquiz = () => {
               <li className="mx-1">&gt;</li>
               <li>Data Analysis Fundamentals</li>
               <li className="mx-1">&gt;</li>
-              <li>Module 1</li>
+              <li>{sidebarModules[moduleIdx].title}</li>
               <li className="mx-1">&gt;</li>
               <li>
                 <span className="text-blue-700 font-semibold">Quiz</span>
@@ -160,16 +205,9 @@ const Learningafterquiz = () => {
                           fontSize: lesson === "Quiz" ? "16px" : "15px",
                           color: lesson === "Quiz" ? "#1B2342" : undefined // Keep Quiz black
                         }}
+                        onClick={() => handleLessonClick(lesson, idx, i)}
                       >
                         <span className="flex-1 truncate flex items-center gap-2">
-                          {/* Checkmark for all items in Module 1 */}
-                          {idx === 0 && (
-                            // Make the Quiz icon green like the lessons above, but keep the text black
-                            <svg width="20" height="20" fill="none" className="mr-1" viewBox="0 0 20 20">
-                              <circle cx="10" cy="10" r="9" stroke="#2FCB65" strokeWidth="1.5" fill="none"/>
-                              <path d="M7.5 10.5l2 2 3-4" stroke="#2FCB65" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          )}
                           {lesson === "Quiz" ? (
                             <span style={{ color: "#1B2342" }}>Quiz</span>
                           ) : (

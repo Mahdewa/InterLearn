@@ -32,7 +32,7 @@ const PrivateRoutes = () => {
             <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />
             <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
             <Route path="/dashboard/workshop/learningviewdetail" element={<LearningViewQuizPage />} />
-            <Route path="/dashboard/user/raport" element={<RaportPage />} />
+            <Route path="/dashboard/user/rapot" element={<RaportPage />} />
             <Route path="/dashboard/user/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
             <Route path="/dashboard/user/mycourses/learningsectionvideo/:course_id" element={<LearningSectionVideocomponent />} />
             <Route path="/dashboard/user/setting" element={<ProfilePage />} />
@@ -40,7 +40,7 @@ const PrivateRoutes = () => {
             //Route Lecturer
             <Route path="/dashboard/lecturer/home" element={<PengajarDashboardPage />} />
             <Route path="/dashboard/lecturer/mycourses" element={<AddCourse />} />
-            <Route path="/dashboard/lecturer/raport" element={<AddRapot />} />
+            <Route path="/dashboard/lecturer/rapot" element={<AddRapot />} />
             <Route path="/dashboard/lecturer/detailcontent" element={<DetailContent />} />
             <Route path="/dashboard/lecturer/setting" element={<ProfilePagePengajar />} />
 
