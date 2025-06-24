@@ -243,13 +243,45 @@ const Learningquiz = () => {
           {/* Breadcrumbs */}
           <nav className="text-gray-500 text-sm">
             <ol className="flex space-x-2 items-center">
-              <li>Home</li>
+              <li>
+                <button
+                  onClick={() => navigate("/dashboard/user/home")}
+                  className="hover:underline text-inherit bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  type="button"
+                >
+                  Home
+                </button>
+              </li>
               <li className="mx-1">&gt;</li>
-              <li>My Courses</li>
+              <li>
+                <button
+                  onClick={() => navigate("/dashboard/user/mycourses")}
+                  className="hover:underline text-inherit bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  type="button"
+                >
+                  My Courses
+                </button>
+              </li>
               <li className="mx-1">&gt;</li>
-              <li>Data Analysis Fundamentals</li>
+              <li>
+                <button
+                  onClick={() => navigate(`/dashboard/user/mycourses/learningsectionvideo/${course_id ?? 1}?module=1&lesson=1`)}
+                  className="hover:underline text-inherit bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  type="button"
+                >
+                  Data Analysis Fundamentals
+                </button>
+              </li>
               <li className="mx-1">&gt;</li>
-              <li>{sidebarModules[moduleIdx].title}</li>
+              <li>
+                <button
+                  onClick={() => navigate(`/dashboard/user/mycourses/learningsectionvideo/${course_id ?? 1}?module=${moduleIdx + 1}&lesson=1`)}
+                  className="hover:underline text-inherit bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  type="button"
+                >
+                  {sidebarModules[moduleIdx].title}
+                </button>
+              </li>
               <li className="mx-1">&gt;</li>
               <li>
                 <span className="text-blue-700 font-semibold">Quiz</span>
